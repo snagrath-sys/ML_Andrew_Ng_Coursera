@@ -5,12 +5,20 @@ function plotData(X, y)
 
 % Create New Figure
 figure; hold on;
-
+m=size(y,1);
 % ====================== YOUR CODE HERE ======================
 % Instructions: Plot the positive and negative examples on a
 %               2D plot, using the option 'k+' for the positive
 %               examples and 'ko' for the negative examples.
 %
+for i=1:m
+	if(y(i)==1)
+		plot(X(i,1),X(i,2),"y+",'markersize',10);
+	
+        else
+	        plot(X(i,1),X(i,2),"bo",'markersize',10);
+	end
+end
 
 
 
