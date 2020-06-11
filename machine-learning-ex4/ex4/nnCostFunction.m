@@ -3,6 +3,13 @@ function [J grad] = nnCostFunction(nn_params, ...
                                    hidden_layer_size, ...
                                    num_labels, ...
                                    X, y, lambda)
+%printf('nn_params : %f \n',size(nn_params));
+%printf('I/p layer : %f \n',size(input_layer_size));
+%printf('hiden layer : %f \n',size(hidden_layer_size));
+%printf('num_labels : %f \n',size(num_labels));
+%printf('X : %f \n',size(X));
+%printf('y : %f \n',size(y));
+%printf('lambda : %f \n',size(lambda));
 %NNCOSTFUNCTION Implements the neural network cost function for a two layer
 %neural network which performs classification
 %   [J grad] = NNCOSTFUNCTON(nn_params, hidden_layer_size, num_labels, ...
@@ -30,6 +37,7 @@ J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
 
+X=[ones(m,1) X];
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
 %               following parts.
@@ -62,7 +70,20 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+for i=1:m
+	act_1=X(i,:);
+	act_2=sigmoid(Theta1 * (act_1)');
+	act_2=[1;act_2];
+	act_3=sigmoid(Theta2*act_2);
+	hypo=act_3;
 
+	%convert y vector's each output value to a vector of 10*1, where all index values except the one that is the output is 0 and the output index is 1
+
+	y_1=[0;0;0;0;0;0;0;0;0;0];
+	y_1(y(i))=1;
+	%this will return an integer cost present for the neural network
+	J=J+((-1/m)*(((log(hypo))'*(y_1))+ ((log(1-hypo))'*(1-y_1))));
+endfor
 
 
 
