@@ -17,6 +17,14 @@ J = 0;
 X_grad = zeros(size(X));
 Theta_grad = zeros(size(Theta));
 
+%fprintf('size X :%f \n',size(X));
+%fprintf('size Theta :%f \n',size(Theta));
+%fprintf('Size 0f Y :%f \n',size(Y));
+%fprintf('Size of R: %f \n',size(R));
+%fprintf('Size num_mmovies : %f \n',num_movies);
+%fprintf('Size num_features : %f \n',num_features);
+%fprintf('Size num_users : %f \n',num_users);
+
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost function and gradient for collaborative
 %               filtering. Concretely, you should first implement the cost
@@ -40,10 +48,11 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+pred=X*Theta';
+J=(sum((pred(R==1)-Y(R==1)).^2)/2)+((lambda/2)*sum(sum(Theta.^2)))+((lambda/2)*sum(sum(X.^2)));
 
-
-
-
+X_grad=(R.*(pred-Y)*Theta)+(lambda*X);
+Theta_grad=R'.*(pred-Y)'*X+(lambda*Theta);
 
 
 
